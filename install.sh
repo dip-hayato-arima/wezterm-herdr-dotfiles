@@ -54,5 +54,6 @@ fi
 link_config "$repo_dir/herdr/config.toml" "$HOME/.config/herdr/config.toml"
 link_config "$repo_dir/wezterm/wezterm.lua" "$HOME/.config/wezterm/wezterm.lua"
 link_config "$repo_dir/wezterm/herdr-session-picker.sh" "$HOME/.config/wezterm/herdr-session-picker.sh"
+link_config "$repo_dir/nvim" "$HOME/.config/nvim"
 
-printf '%s\n' 'Done. Restart WezTerm to use the new configuration.'
+printf '%s\n' 'Done. Restart WezTerm to use the new configuration. Neovim installs its plugins on first launch.'

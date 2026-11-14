@@ -1,6 +1,6 @@
 # WezTerm + Herdr dotfiles
 
-macOS 向けの [WezTerm](https://wezterm.org/) と [Herdr](https://herdr.dev/) の設定です。WezTerm を開くと Herdr のセッションを一覧から選んで入り、Cmd キーのショートカットで Herdr のタブ・分割・ワークスペースを操作します。
+macOS 向けの [WezTerm](https://wezterm.org/)、[Herdr](https://herdr.dev/)、[Neovim](https://neovim.io/) の設定です。WezTerm を開くと Herdr のセッションを一覧から選んで入り、Cmd キーのショートカットで Herdr のタブ・分割・ワークスペースを操作します。
 
 もとは Ghostty + Herdr で使っていた設定で、WezTerm でも同じ見た目・操作になるようにそろえています（配色、透過 0.85、ぼかし 20、キー割り当て）。新しいタブ・ウィンドウは zsh のログインシェルで開きます。
 
@@ -24,6 +24,7 @@ WezTerm を再起動してください。`install.sh` は設定をシンボリ�
 | `wezterm/wezterm.lua` | `~/.config/wezterm/wezterm.lua` |
 | `wezterm/herdr-session-picker.sh` | `~/.config/wezterm/herdr-session-picker.sh` |
 | `herdr/config.toml` | `~/.config/herdr/config.toml` |
+| `nvim/` | `~/.config/nvim`（フォルダごとリンク） |
 
 WezTerm からは `~/.local/bin/herdr` を起動します。`install.sh` はその場所に Herdr がなければ、インストール済みの `herdr` へのリンクを作ります。Herdr の設定を変えたら、Herdr の中で Ctrl+B → Shift+R を押すか、`herdr server reload-config` で再読み込みします。
 
@@ -83,10 +84,38 @@ Herdr のセッション、ログ、ソケット、リリース情報は端末�
 
 WezTerm 独自の既定ショートカットは、Claude Code などへの入力を横取りしないよう全部外しています。日本語入力中でも効くよう、文字キーは物理キーの位置で判定します。
 
+## Neovim
+
+VSCode に近い使い勝手の設定です（左にコード、右にファイルツリー）。プラグインは [lazy.nvim](https://github.com/folke/lazy.nvim) で管理し、初回起動時に自動で入ります。入る版は `nvim/lazy-lock.json` で固定しています。
+
+| ファイル | 中身 |
+| --- | --- |
+| `nvim/init.lua` | 基本設定、lazy.nvim の導入、よく使うキー |
+| `nvim/lua/plugins/ui.lua` | 配色（vscode.nvim、背景は透過）、ファイルツリー（neo-tree）、上のタブ（bufferline）、ステータスバー |
+| `nvim/lua/plugins/editor.lua` | 検索（Telescope）、Git の差分（gitsigns・lazygit）、下に開くターミナル、括弧の補完、問題の一覧 |
+| `nvim/lua/plugins/lsp.lua` | 構文ハイライト（Tree-sitter）、言語サーバー（Mason）、入力補完（blink.cmp）、保存時の整形（conform） |
+| `nvim/lua/plugins/markdown.lua` | Markdown をエディタ内で見やすく表示、ブラウザでプレビュー（Mermaid 図も表示） |
+
+| キー | 動き |
+| --- | --- |
+| Space | リーダーキー。押して待つと候補の一覧が出る |
+| Ctrl+P、Space f f | ファイル検索 |
+| Space f g | 文字列検索 |
+| Ctrl+B | ファイルツリーの表示切替 |
+| Tab / Shift+Tab | 次・前のファイル（上のタブ） |
+| Ctrl+S | 保存 |
+| Ctrl+\ | 下のターミナルの表示切替 |
+| g d / K / F2 | 定義へジャンプ / 型・説明の表示 / 名前の変更 |
+| Space g g | lazygit |
+| Space m p | Markdown をブラウザでプレビュー |
+
+`Brewfile` で Neovim と ripgrep（文字列検索に使う）を入れます。lazygit・Node.js（Markdown のプレビュー）・prettier・stylua（整形）は使う場合だけ別に入れてください。
+
 ## この環境で確認したバージョン
 
 - WezTerm 20240203-110809-5046fc22
 - Herdr 0.9.3
+- Neovim 0.12.5
 
 Homebrew は導入時に利用可能な版を入れるため、上記の版に固定はしていません。
 

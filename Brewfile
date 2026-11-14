@@ -1,3 +1,5 @@
 cask "wezterm"
 brew "herdr"
 brew "fzf"
+brew "neovim"
+brew "ripgrep"
